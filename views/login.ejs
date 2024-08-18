@@ -1,17 +1,26 @@
-<form method="post">
-    <h1>Log in</h1>
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email">
+<div class="w3-card-4" style="max-width: 800px; margin: 0 auto;">
+    <div class="w3-container w3-blue">
+        <h2>Log in</h2>
     </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <% if (error) { %>
-        <div class="alert alert-danger" role="alert">
-            <%= error %>
-        </div>
-        <% } %>
-</form>
+    <form method="post" class="w3-container">
+        <p>
+            <label for="email">Email</label>
+            <input class="w3-input w3-border w3-light-grey" type="email" class="form-control" id="email" name="email">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input class="w3-input w3-border w3-light-grey" type="password" class="form-control" id="password"
+                name="password">
+        </p>
+        <p>
+            <button class="w3-btn w3-blue" type="submit" class="btn btn-primary">Submit</button>
+        </p>
+        <% if (error && error.length!==0) { %>
+            <div class="w3-panel w3-red">
+                <h5 class="w3-center">
+                    <%= error %>
+                </h5>
+            </div>
+            <% } %>
+    </form>
+</div>

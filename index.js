@@ -10,6 +10,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const path = require("path");
+app.use(express.static(path.join(__dirname, "views/public")));
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -43,6 +46,9 @@ app.use(expressLayouts);
 
 const loginRouter = require("./routes/loginRouter");
 app.use("/login", loginRouter);
+
+const logoutRouter = require("./routes/logoutRouter");
+app.use("/logout", logoutRouter);
 
 const userRouter = require("./routes/userRouter");
 app.use("/user", userRouter);

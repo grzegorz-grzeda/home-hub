@@ -5,21 +5,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Home Hub</title>
+    <link rel="stylesheet" href="/css/w3.css">
     <%- style %>
 </head>
 
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/user">User</a></li>
-            </ul>
+        <nav class="w3-bar w3-blue">
+            <a href="/" class="w3-bar-item w3-button">Home</a>
+            <% if (currentUser) { %>
+                <a href="/profile" class="w3-bar-item w3-button">Profile</a>
+                <a href="/logout" class="w3-bar-item w3-button">Logout</a>
+                <% } else { %>
+                    <a href="/login" class="w3-bar-item w3-button">Login</a>
+                    <a href="/register" class="w3-bar-item w3-button">Register</a>
+                    <% } %>
+
         </nav>
     </header>
-    <%- body %>
-        <%- script %>
+    <main class="w3-container w3-margin">
+        <%- body %>
+    </main>
+    <footer class="w3-container w3-blue w3-center w3-margin-top">
+        <p>&copy; 2024 Home Hub</p>
+    </footer>
+    <%- script %>
 </body>
 
 </html>
