@@ -1,0 +1,19 @@
+{
+  "name": "home-hub",
+  "version": "0.0.1",
+  "description": "Home hub for all smart devices",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Grzegorz Grzęda",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1",
+    "mongoose": "^8.5.3",
+    "nodemon": "^3.1.4"
+  }
+}
