@@ -1,0 +1,15 @@
+<h3>
+    <%= user.name %>
+</h3>
+<p>
+    <%= user.email %>
+</p>
+<h3>Roles</h3>
+<ul>
+    <% user.roles.forEach(function(role) { %>
+        <li>
+            <%= role %>
+        </li>
+        <% }); %>
+</ul>
+<a href="/user/update/<%= user.id %>">Update</a>

@@ -1,0 +1,12 @@
+<h1>User List</h1>
+<a href="/user/create">Create a User</a>
+<ul>
+    <% users.forEach(function(user) { %>
+        <li>
+            <a href="/user/details/<%=user.id%>">
+                <%=user.name %> - <%= user.email %>
+            </a>
+            <% if (user.roles[0]==='admin' ) { %> - Admin <% } %>
+        </li>
+        <% }); %>
+</ul>
