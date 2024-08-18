@@ -1,11 +1,20 @@
 require("dotenv").config();
 
 const express = require("express");
-const app = express();
 const port = process.env.PORT || 3000;
 
+const expressLayouts = require("express-ejs-layouts");
+
+const app = express();
+
+app.set("view engine", "ejs");
+app.set("layout", "layouts/layout");
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
+app.use(expressLayouts);
+
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.render("index");
 });
 
 app.listen(port, () => {
