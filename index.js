@@ -56,9 +56,31 @@ app.use("/user", userRouter);
 const dashboardRouter = require("./routes/dashboardRouter");
 app.use("/dashboard", dashboardRouter);
 
+const profileRouter = require("./routes/profileRouter");
+app.use("/profile", profileRouter);
+
 const indexRouter = require("./routes/indexRouter");
 app.use("/", indexRouter);
 
-app.listen(port, () => {
+const errorHandling = require("./middleware/errorHandling");
+errorHandling(app);
+
+const server = app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
-});  
+});
+
+process.on('unhandledRejection', (err) => {
+    console.error('Unhandled Rejection! Shutting down...');
+    console.error(err.name, err.message);
+    server.close(() => {
+        process.exit(1);
+    });
+});
+
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception! Shutting down...');
+    console.error(err.name, err.message);
+    server.close(() => {
+        process.exit(1);
+    });
+});
