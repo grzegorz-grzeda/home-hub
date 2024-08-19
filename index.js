@@ -21,6 +21,9 @@ function setUpExpressApp() {
 }
 
 function setUpRoutes(app) {
+    const apiRouter = require("./routes/apiRouter");
+    app.use("/api", apiRouter);
+
     const loginRouter = require("./routes/loginRouter");
     app.use("/login", loginRouter);
 
