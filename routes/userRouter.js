@@ -1,6 +1,10 @@
 const router = require('express').Router();
-
 const userService = require('../services/userService');
+const loginHandling = require('../middleware/loginHandling');
+const adminHandling = require('../middleware/adminHandling');
+
+router.use(loginHandling.ensureAuthenticated);
+router.use(adminHandling.ensureAdmin);
 
 router.get('/', async (req, res) => {
     res.redirect('/user/list');

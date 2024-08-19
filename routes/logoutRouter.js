@@ -1,7 +1,9 @@
 const router = require('express').Router();
-const loginService = require('../services/loginService');
+const loginHandling = require('../middleware/loginHandling');
 
-router.get('/', loginService.ensureAuthenticated, (req, res, next) => {
+router.use(loginHandling.ensureAuthenticated);
+
+router.get('/', (req, res, next) => {
     req.logout((err) => {
         if (err) {
             return next(err);

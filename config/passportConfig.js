@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const userModel = require('../models/userModel');
+const adminHandling = require('../middleware/adminHandling');
 
 module.exports = (app) => {
     app.use(passport.initialize());
@@ -38,6 +39,7 @@ module.exports = (app) => {
     passport.deserializeUser(async (id, done) => {
         try {
             const user = await userModel.findById(id);
+            user.isAdmin = adminHandling.isAdmin(user);
             done(null, user);
         } catch (err) {
             done(err);

@@ -1,7 +1,9 @@
 const router = require('express').Router();
-const loginService = require('../services/loginService');
+const loginHandling = require('../middleware/loginHandling');
 
-router.get('/', loginService.ensureAuthenticated, async (req, res) => {
+router.use(loginHandling.ensureAuthenticated);
+
+router.get('/', async (req, res) => {
     res.render('profile');
 });
 
