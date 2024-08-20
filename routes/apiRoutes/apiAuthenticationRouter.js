@@ -1,30 +1,10 @@
 const router = require('express').Router();
 const passport = require('passport');
-const rateLimit = require('express-rate-limit');
+const loginHandling = require('../../middleware/loginHandling');
 
-const loginLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // Limit each IP to 5 login requests per `window`
-    message: 'Too many login attempts, please try again later.'
-});
-
-
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.status(401).json({ message: 'Not authenticated' });
-}
-
-function ensureNotAuthenticated(req, res, next) {
-    if (!req.isAuthenticated()) {
-        return next();
-    }
-    res.status(401).json({ message: 'Already authenticated' });
-}
-
-router.post('/login', loginLimiter, ensureNotAuthenticated, (req, res, next) => {
+router.post('/login', loginHandling.loginLimiter, loginHandling.ensureApiNotAuthenticated, (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
+        console.log(`err: ${err}, user: ${user}, info: ${info}`);
         if (err) {
             return next(err);
         }
@@ -41,13 +21,13 @@ router.post('/login', loginLimiter, ensureNotAuthenticated, (req, res, next) => 
                 if (err) {
                     return next(err);
                 }
-                res.json({ message: `Logged in successfully` });
+                res.json({ message: `Logged in successfully`, user: user._id });
             });
         });
     })(req, res, next);
 });
 
-router.post('/logout', ensureAuthenticated, (req, res) => {
+router.post('/logout', loginHandling.loginLimiter, loginHandling.ensureApiAuthenticated, (req, res) => {
     req.logout((err) => {
         if (err) {
             return next(err);
@@ -59,6 +39,10 @@ router.post('/logout', ensureAuthenticated, (req, res) => {
             res.json({ message: 'Logged out' });
         });
     });
+});
+
+router.get('/session', loginHandling.ensureApiAuthenticated, (req, res) => {
+    return res.json({ message: 'Authenticated', user: req.user._id });
 });
 
 module.exports = router;
