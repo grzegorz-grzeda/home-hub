@@ -29,7 +29,7 @@ module.exports = {
         if (!req.isAuthenticated()) {
             return next();
         }
-        res.status(401).json({ message: 'Already authenticated' });
+        res.json({ message: 'Already authenticated' });
     },
     loginLimiter: loginLimiter
 }

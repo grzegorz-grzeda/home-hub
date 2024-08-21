@@ -4,7 +4,6 @@ const loginHandling = require('../../middleware/loginHandling');
 
 router.post('/login', loginHandling.loginLimiter, loginHandling.ensureApiNotAuthenticated, (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
-        console.log(`err: ${err}, user: ${user}, info: ${info}`);
         if (err) {
             return next(err);
         }
