@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const currentDeviceFirmwareSchema = new mongoose.Schema({
+const currentDeviceStateSchema = new mongoose.Schema({
     deviceId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Device',
@@ -11,9 +11,9 @@ const currentDeviceFirmwareSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Firmware',
     },
-    firmwareVersion: {
-        type: String,
-        required: true
+    configurationId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Configuration',
     },
     lastUpdated: {
         type: Date,
@@ -21,6 +21,6 @@ const currentDeviceFirmwareSchema = new mongoose.Schema({
     }
 });
 
-const CurrentDeviceFirmwareModel = mongoose.model('CurrentDeviceFirmware', currentDeviceFirmwareSchema);
+const CurrentDeviceStateModel = mongoose.model('CurrentDeviceFirmware', currentDeviceStateSchema);
 
-module.exports = CurrentDeviceFirmwareModel;
+module.exports = CurrentDeviceStateModel;

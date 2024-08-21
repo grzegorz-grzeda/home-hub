@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 
 const configurationSchema = new mongoose.Schema({
-    deviceId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Device',
-        required: true,
-        unique: true
+    version: {
+        type: String,
+        required: true
     },
     configuration: {
         type: Object,

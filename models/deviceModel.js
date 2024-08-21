@@ -23,10 +23,6 @@ const deviceSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    firmware: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Firmware'
-    },
 });
 
 const Device = mongoose.model('Device', deviceSchema);

@@ -17,29 +17,46 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/device-type', ensureApiAdmin, async (req, res) => {
-    const deviceType = new DeviceType({
+router.post('/', ensureApiAdmin, async (req, res) => {
+    const device = new Device({
         name: req.body.name,
-        description: req.body.description
+        description: req.body.description,
+        deviceType: req.body.deviceType
     });
 
     try {
-        const newDeviceType = await deviceType.save();
-        res.status(201).json(newDeviceType);
+        const newDevice = await device.save();
+        res.status(201).json(newDevice);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 });
 
-router.get('/device-type', async (req, res) => {
+router.post('/:id', ensureApiAdmin, async (req, res) => {
+    const device = await Device.findById(req.params.id);
+    if (!device) {
+        return res.status(404).json({ message: 'Device not found' });
+    }
+    if (req.body.name) {
+        device.name = req.body.name;
+    }
+    if (req.body.description) {
+        device.description = req.body.description;
+    }
+    if (req.body.deviceType) {
+        const deviceType = await DeviceType.findById(req.body.deviceType);
+        if (!deviceType) {
+            return res.status(404).json({ message: 'Device type not found' });
+        }
+        device.deviceType = req.body.deviceType;
+    }
     try {
-        const deviceTypes = await DeviceType.find();
-        res.json(deviceTypes);
+        device.lastUpdated = Date.now();
+        const updatedDevice = await device.save();
+        res.json(updatedDevice);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 });
-
-
 
 module.exports = router;
