@@ -15,6 +15,14 @@ const deviceSchema = new mongoose.Schema({
         ref: 'DeviceType',
         required: true
     },
+    firmwareId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Firmware',
+    },
+    configurationId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Configuration',
+    },
     createdAt: {
         type: Date,
         default: Date.now

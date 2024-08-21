@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const firmwareSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     version: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     deviceType: {
         type: mongoose.Schema.Types.ObjectId,
@@ -15,8 +16,7 @@ const firmwareSchema = new mongoose.Schema({
         required: true
     },
     binary: {
-        type: Buffer,
-        required: true
+        type: Buffer
     },
     createdAt: {
         type: Date,

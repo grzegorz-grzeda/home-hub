@@ -2,6 +2,8 @@ const router = require('express').Router();
 
 const Device = require('../../models/deviceModel');
 const DeviceType = require('../../models/deviceTypeModel');
+const Firmware = require('../../models/firmwareModel');
+const Configuration = require('../../models/configurationModel');
 
 const { ensureApiAuthenticated } = require('../../middleware/loginHandling');
 const { ensureApiAdmin } = require('../../middleware/adminHandling');
@@ -49,6 +51,26 @@ router.post('/:id', ensureApiAdmin, async (req, res) => {
             return res.status(404).json({ message: 'Device type not found' });
         }
         device.deviceType = req.body.deviceType;
+    }
+    if (req.body.firmwareId) {
+        const firmware = await Firmware.findById(req.body.firmwareId);
+        if (!firmware) {
+            return res.status(404).json({ message: 'Firmware not found' });
+        }
+        if (firmware.deviceType != device.deviceType) {
+            return res.status(400).json({ message: 'Firmware does not match device type' });
+        }
+        device.firmwareId = req.body.firmwareId;
+    }
+    if (req.body.configurationId) {
+        const configuration = await Configuration.findById(req.body.configurationId);
+        if (!configuration) {
+            return res.status(404).json({ message: 'Configuration not found' });
+        }
+        if (configuration.deviceType != device.deviceType) {
+            return res.status(400).json({ message: 'Configuration does not match device type' });
+        }
+        device.configurationId = req.body.configurationId;
     }
     try {
         device.lastUpdated = Date.now();
